@@ -13,7 +13,15 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
       - ./seeder.sql:/docker-entrypoint-initdb.d/02-seeder.sql:ro
 
-  lang:
+  elixir:
+    image: elixir:1.18
+    container_name: legacy_elixir
+    working_dir: /app
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    command: ["elixir", "legacy.ex"]
 
 volumes:
   postgres_data:
